@@ -4,6 +4,73 @@ import API from './Axios';
 
 const BACKEND_BASE_URL = (API.defaults.baseURL || '').replace(/\/api\/?$/, '');
 
+const SERIF_FONT = { fontFamily: "'Fraunces', Georgia, serif" };
+const SANS_FONT = { fontFamily: "'DM Sans', system-ui, -apple-system, sans-serif" };
+
+function CivicCycleLogo() {
+  return (
+    <div className="flex items-center gap-2.5 select-none">
+      <svg
+        width="36"
+        height="36"
+        viewBox="0 0 48 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="shrink-0"
+        aria-hidden="true"
+      >
+        <path
+          d="M10.5 21.5C11.8 14.4 18 9 25.5 9C32.2 9 37.9 13.4 39.8 19.5"
+          stroke="#E85D2A"
+          strokeWidth="3.2"
+          strokeLinecap="round"
+        />
+        <path
+          d="M36.5 17.5L40.4 21.2L42.8 16.4"
+          stroke="#E85D2A"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M37.5 26.5C36.2 33.6 30 39 22.5 39C15.8 39 10.1 34.6 8.2 28.5"
+          stroke="#E85D2A"
+          strokeWidth="3.2"
+          strokeLinecap="round"
+        />
+        <path
+          d="M11.5 30.5L7.6 26.8L5.2 31.6"
+          stroke="#E85D2A"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M24 14.5C19.3 14.5 15.5 18.2 15.5 22.8C15.5 28.4 24 36.2 24 36.2C24 36.2 32.5 28.4 32.5 22.8C32.5 18.2 28.7 14.5 24 14.5Z"
+          fill="#3D2B1F"
+        />
+        <path
+          d="M24 27.2C24 27.2 28.2 25.4 28.2 21.2C28.2 20.6 28.1 20.1 28 19.8C27.5 19.7 27 19.6 26.4 19.6C22.2 19.6 20.4 23.6 20.4 23.6C21.5 24.4 22.7 25.5 24 27.2Z"
+          fill="#FAF8F5"
+        />
+        <path
+          d="M21.8 25.8C23 24.1 24.7 22.6 26.7 21.3"
+          stroke="#E85D2A"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+        />
+      </svg>
+
+      <span
+        style={SERIF_FONT}
+        className="text-lg sm:text-2xl font-bold tracking-tight leading-none text-[#3D2B1F]"
+      >
+        Civic<span className="text-[#E85D2A]">Cycle</span>
+      </span>
+    </div>
+  );
+}
+
 function CakePieChart({
   items,
   labelKey,
@@ -15,13 +82,13 @@ function CakePieChart({
   const [highlightOthers, setHighlightOthers] = useState(false);
 
   const palette = [
-    '#0284C7',
-    '#0D9488',
+    '#E85D2A',
+    '#15803D',
     '#D97706',
+    '#0284C7',
     '#7C3AED',
-    '#E11D48',
-    '#475569',
-    '#16A34A',
+    '#6B5B4E',
+    '#0D9488',
   ];
 
   const sortedItems = [...items].sort((a, b) => (b[countKey] || 0) - (a[countKey] || 0));
@@ -29,7 +96,7 @@ function CakePieChart({
 
   if (total === 0 || sortedItems.length === 0) {
     return (
-      <div className="py-12 text-center text-sm font-semibold text-slate-500">
+      <div className="py-12 text-center text-sm font-medium text-[#6B5B4E]">
         No data available yet.
       </div>
     );
@@ -54,7 +121,7 @@ function CakePieChart({
             key: 'others-slice',
             label: `Others (${remainingItems.length})`,
             count: othersCount,
-            color: '#475569',
+            color: '#6B5B4E',
             isOthers: true,
           },
         ]
@@ -174,12 +241,12 @@ function CakePieChart({
       </div>
 
       {hasOthers && (
-        <p className="text-[11px] font-bold text-slate-600 -mt-2">
+        <p className="text-[11px] font-semibold text-[#6B5B4E] -mt-2">
           Showing Top {maxSlices} on chart + {remainingItems.length} grouped under{' '}
           <button
             type="button"
             onClick={() => setHighlightOthers((prev) => !prev)}
-            className="text-blue-700 underline font-extrabold cursor-pointer"
+            className="text-[#E85D2A] underline font-bold cursor-pointer"
           >
             Others
           </button>
@@ -187,44 +254,44 @@ function CakePieChart({
         </p>
       )}
 
-      <div className="w-full rounded-xl border border-slate-300 overflow-hidden bg-white">
-        <div className="max-h-56 overflow-y-auto divide-y divide-slate-200">
+      <div className="w-full rounded-2xl border border-[#E6E0D4] overflow-hidden bg-white">
+        <div className="max-h-56 overflow-y-auto divide-y divide-[#EDE8DF]">
           {sortedItems.map((item, idx) => {
             const pct = Math.round(((item[countKey] || 0) / total) * 100);
             const isInOthers = hasOthers && idx >= maxSlices;
-            const dotColor = isInOthers ? '#475569' : palette[idx % palette.length];
+            const dotColor = isInOthers ? '#6B5B4E' : palette[idx % palette.length];
 
             return (
               <div
                 key={`${item[labelKey]}-${idx}`}
-                className={`flex items-center justify-between gap-2 px-3 py-2 text-xs transition-colors ${
+                className={`flex items-center justify-between gap-2 px-3.5 py-2.5 text-xs transition-colors ${
                   isInOthers && highlightOthers
-                    ? 'bg-amber-50'
-                    : 'hover:bg-slate-50'
+                    ? 'bg-[#FEF9C3]/50'
+                    : 'hover:bg-[#FAF8F5]'
                 }`}
               >
                 <div className="flex items-center gap-2 min-w-0 flex-1">
-                  <span className="text-[11px] font-extrabold text-slate-400 w-5 shrink-0">
+                  <span className="text-[11px] font-bold text-[#9E8F80] w-5 shrink-0">
                     #{idx + 1}
                   </span>
                   <span
                     style={{ backgroundColor: dotColor }}
-                    className="w-3 h-3 rounded-xs shrink-0"
+                    className="w-3 h-3 rounded-full shrink-0"
                   />
                   <div className="min-w-0 flex-1">
                     <p
                       title={item[labelKey]}
-                      className="font-extrabold text-slate-900 truncate"
+                      className="font-bold text-[#3D2B1F] truncate"
                     >
                       {item[labelKey]}
                       {isInOthers && (
-                        <span className="ml-1.5 text-[10px] font-bold px-1.5 py-0.2 rounded bg-slate-200 text-slate-700">
+                        <span className="ml-1.5 text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-[#F3EDE3] text-[#6B5B4E]">
                           Others
                         </span>
                       )}
                     </p>
                     {subLabelKey && item[subLabelKey] && (
-                      <p className="text-[11px] font-medium text-slate-500 truncate">
+                      <p className="text-[11px] font-medium text-[#9E8F80] truncate">
                         {item[subLabelKey]}
                       </p>
                     )}
@@ -232,8 +299,8 @@ function CakePieChart({
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
-                  <span className="font-bold text-slate-600">{item[countKey]} req</span>
-                  <span className="font-black px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-slate-900 min-w-[44px] text-center">
+                  <span className="font-semibold text-[#6B5B4E]">{item[countKey]} req</span>
+                  <span className="font-bold px-2.5 py-0.5 rounded-full bg-[#FAF8F5] border border-[#E6E0D4] text-[#3D2B1F] min-w-[44px] text-center">
                     {pct}%
                   </span>
                 </div>
@@ -242,13 +309,13 @@ function CakePieChart({
           })}
         </div>
 
-        <div className="bg-slate-100 border-t-2 border-slate-300 px-3 py-2.5 flex items-center justify-between text-xs font-black text-slate-900">
+        <div className="bg-[#FAF8F5] border-t border-[#E6E0D4] px-3.5 py-2.5 flex items-center justify-between text-xs font-bold text-[#3D2B1F]">
           <span>
             {totalLabel} ({sortedItems.length} {sortedItems.length === 1 ? 'entry' : 'entries'})
           </span>
           <div className="flex items-center gap-2">
-            <span className="text-blue-800">{total} req</span>
-            <span className="px-2 py-0.5 rounded bg-slate-900 text-white">100%</span>
+            <span className="text-[#E85D2A]">{total} req</span>
+            <span className="px-2.5 py-0.5 rounded-full bg-[#3D2B1F] text-white">100%</span>
           </div>
         </div>
       </div>
@@ -517,15 +584,15 @@ function AdminDashboard() {
   const getStatusBadgeClasses = (status) => {
     switch (status) {
       case 'COMPLETED':
-        return 'bg-teal-50 text-teal-900 border-teal-300';
+        return 'bg-[#ECFDF5] text-[#166534] border-[#BBF7D0]';
       case 'IN_PROGRESS':
-        return 'bg-blue-50 text-blue-900 border-blue-300';
+        return 'bg-[#FFF7ED] text-[#C2410C] border-[#FED7AA]';
       case 'REJECTED':
-        return 'bg-red-50 text-red-900 border-red-300';
+        return 'bg-[#FEF2F2] text-[#991B1B] border-[#FECACA]';
       case 'CANCELLED':
-        return 'bg-slate-100 text-slate-800 border-slate-300';
+        return 'bg-[#F3EDE3] text-[#6B5B4E] border-[#DED6C9]';
       default:
-        return 'bg-amber-50 text-amber-900 border-amber-300';
+        return 'bg-[#FEF9C3] text-[#854D0E] border-[#FDE047]';
     }
   };
 
@@ -533,41 +600,27 @@ function AdminDashboard() {
   const activePickupsCount = (kpis.pending_requests || 0) + (kpis.in_progress_requests || 0);
 
   return (
-    <div className="min-h-screen bg-[#F1F5F9] text-slate-900 flex flex-col">
-      <header className="bg-white border-b border-slate-300 sticky top-0 z-30 shadow-2xs">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2 sm:gap-4">
-          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-700 flex items-center justify-center shadow-xs shrink-0">
-              <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.3">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 11l2 2 4-4" />
-              </svg>
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-base sm:text-lg font-extrabold tracking-tight text-slate-900 leading-none">
-                  Civic<span className="text-blue-700">Cycle</span>
-                </span>
-                <span className="hidden sm:inline-block text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-900 text-white">
-                  Command Center
-                </span>
-                <span className="hidden md:inline-block text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 text-blue-800 border border-blue-200">
-                  System Admin
-                </span>
-              </div>
-              <p className="text-[11px] sm:text-xs font-semibold text-slate-600 mt-0.5 truncate">
-                <span className="sm:hidden">Admin: </span>
-                <span className="hidden sm:inline">Administrator: </span>
-                <span className="text-slate-900 font-bold">{adminName}</span>
+    <div style={SANS_FONT} className="min-h-screen bg-[#FAF8F5] text-[#3D2B1F] flex flex-col">
+      <header className="bg-white/95 backdrop-blur-sm border-b border-[#E6E0D4] sticky top-0 z-30">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-3 flex items-center justify-between gap-2 sm:gap-4">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <CivicCycleLogo />
+            <div className="hidden sm:block h-5 w-px bg-[#E6E0D4]" />
+            <div className="hidden sm:flex items-center gap-2 min-w-0">
+              <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#3D2B1F] text-white">
+                Command Center
+              </span>
+              <p className="text-xs font-medium text-[#6B5B4E] truncate">
+                Admin: <span className="text-[#3D2B1F] font-bold">{adminName}</span>
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => fetchAllAdminData(true)}
               disabled={isRefreshing}
-              className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl border-2 border-blue-300 bg-blue-50 hover:bg-blue-100 text-blue-900 text-xs sm:text-sm font-extrabold transition-colors cursor-pointer"
+              className="px-3.5 sm:px-4 py-2 rounded-full border border-[#D8CFC2] bg-[#FAF8F5] hover:bg-[#F3EDE3] text-[#3D2B1F] text-xs sm:text-sm font-bold transition-colors cursor-pointer"
               title="Sync Data"
             >
               {isRefreshing ? (
@@ -581,27 +634,27 @@ function AdminDashboard() {
             </button>
             <button
               onClick={handleLogout}
-              className="px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-xl border-2 border-red-200 bg-white hover:bg-red-50 text-red-700 text-xs sm:text-sm font-extrabold transition-colors cursor-pointer"
+              className="px-3.5 sm:px-4 py-2 rounded-full border border-[#D8CFC2] bg-white hover:bg-[#FAF5EE] hover:border-[#3D2B1F] text-[#3D2B1F] text-xs sm:text-sm font-semibold transition-all cursor-pointer"
             >
-              Logout
+              Log out
             </button>
           </div>
         </div>
       </header>
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-7 space-y-6">
         {statusMessage.text && (
           <div
-            className={`p-4 rounded-xl border-l-4 text-sm font-bold flex items-center justify-between gap-3 shadow-xs ${
+            className={`px-5 py-4 rounded-2xl border text-sm font-semibold flex items-center justify-between gap-3 shadow-xs ${
               statusMessage.type === 'success'
-                ? 'bg-teal-50 border-teal-700 text-teal-950'
-                : 'bg-red-50 border-red-700 text-red-950'
+                ? 'bg-[#ECFDF5] border-[#A7F3D0] text-[#14532D]'
+                : 'bg-[#FEF2F2] border-[#FECACA] text-[#7F1D1D]'
             }`}
           >
             <span>{statusMessage.text}</span>
             <button
               onClick={() => setStatusMessage({ type: '', text: '' })}
-              className="text-xs font-extrabold opacity-70 hover:opacity-100 cursor-pointer"
+              className="text-xs font-bold opacity-70 hover:opacity-100 cursor-pointer px-1.5 py-0.5 rounded-full"
             >
               ✕
             </button>
@@ -609,83 +662,83 @@ function AdminDashboard() {
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white rounded-2xl border-2 border-amber-300 p-5 shadow-2xs flex flex-col justify-between">
+          <div className="bg-white rounded-3xl border border-[#E6E0D4] p-5 shadow-[0_2px_10px_rgba(61,43,31,0.03)] flex flex-col justify-between">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-amber-900">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#854D0E]">
                 Pending Approvals
               </span>
-              <span className="text-[10px] font-extrabold px-2 py-0.5 rounded bg-amber-100 text-amber-950 border border-amber-300">
+              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#FEF9C3] text-[#854D0E] border border-[#FDE047]">
                 KYC
               </span>
             </div>
-            <span className="text-3xl sm:text-4xl font-black text-amber-700 mt-2">
+            <span style={SERIF_FONT} className="text-3xl sm:text-4xl font-bold text-[#A16207] mt-2">
               {kpis.pending_collector_approvals || 0}
             </span>
-            <span className="text-xs font-semibold text-slate-600 mt-1">
+            <span className="text-xs font-medium text-[#6B5B4E] mt-1">
               Out of {kpis.total_collectors || 0} registered collectors
             </span>
           </div>
 
-          <div className="bg-white rounded-2xl border-2 border-blue-300 p-5 shadow-2xs flex flex-col justify-between">
+          <div className="bg-white rounded-3xl border border-[#E6E0D4] p-5 shadow-[0_2px_10px_rgba(61,43,31,0.03)] flex flex-col justify-between">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-blue-900">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#C2410C]">
                 Active Pickups
               </span>
-              <span className="text-[10px] font-extrabold px-2 py-0.5 rounded bg-blue-100 text-blue-950 border border-blue-300">
+              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#FFF7ED] text-[#C2410C] border border-[#FED7AA]">
                 LIVE
               </span>
             </div>
-            <span className="text-3xl sm:text-4xl font-black text-blue-700 mt-2">
+            <span style={SERIF_FONT} className="text-3xl sm:text-4xl font-bold text-[#E85D2A] mt-2">
               {activePickupsCount}
             </span>
-            <span className="text-xs font-semibold text-slate-600 mt-1">
+            <span className="text-xs font-medium text-[#6B5B4E] mt-1">
               {kpis.pending_requests || 0} Pending • {kpis.in_progress_requests || 0} In Progress
             </span>
           </div>
 
-          <div className="bg-white rounded-2xl border-2 border-teal-300 p-5 shadow-2xs flex flex-col justify-between">
+          <div className="bg-white rounded-3xl border border-[#E6E0D4] p-5 shadow-[0_2px_10px_rgba(61,43,31,0.03)] flex flex-col justify-between">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-teal-900">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#166534]">
                 Completed Pickups
               </span>
-              <span className="text-[10px] font-extrabold px-2 py-0.5 rounded bg-teal-100 text-teal-950 border border-teal-300">
+              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#ECFDF5] text-[#166534] border border-[#BBF7D0]">
                 DONE
               </span>
             </div>
-            <span className="text-3xl sm:text-4xl font-black text-teal-700 mt-2">
+            <span style={SERIF_FONT} className="text-3xl sm:text-4xl font-bold text-[#15803D] mt-2">
               {kpis.completed_requests || 0}
             </span>
-            <span className="text-xs font-semibold text-slate-600 mt-1">
+            <span className="text-xs font-medium text-[#6B5B4E] mt-1">
               Out of {kpis.total_requests || 0} total requests
             </span>
           </div>
 
           <div
             onClick={() => setActiveTab('CITIZENS')}
-            className={`bg-white rounded-2xl border-2 p-5 shadow-2xs flex flex-col justify-between cursor-pointer transition-all ${
+            className={`bg-white rounded-3xl border p-5 shadow-[0_2px_10px_rgba(61,43,31,0.03)] flex flex-col justify-between cursor-pointer transition-all ${
               activeTab === 'CITIZENS'
-                ? 'border-blue-700 ring-2 ring-blue-200'
-                : 'border-slate-300 hover:border-blue-600 hover:shadow-sm'
+                ? 'border-[#3D2B1F] ring-1 ring-[#3D2B1F]'
+                : 'border-[#E6E0D4] hover:border-[#3D2B1F]'
             }`}
           >
             <div className="flex items-center justify-between">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-slate-800">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#3D2B1F]">
                 Registered Citizens
               </span>
-              <span className="text-[10px] font-extrabold px-2 py-0.5 rounded bg-slate-200 text-slate-900 border border-slate-300">
+              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#F3EDE3] text-[#3D2B1F]">
                 USERS ↗
               </span>
             </div>
-            <span className="text-3xl sm:text-4xl font-black text-slate-900 mt-2">
+            <span style={SERIF_FONT} className="text-3xl sm:text-4xl font-bold text-[#3D2B1F] mt-2">
               {kpis.total_citizens || 0}
             </span>
-            <span className="text-xs font-semibold text-blue-700 mt-1">
+            <span className="text-xs font-bold text-[#E85D2A] mt-1">
               Click to view registered citizens
             </span>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl border border-slate-300 p-3 shadow-2xs flex flex-wrap gap-2">
+        <div className="bg-white rounded-3xl border border-[#E6E0D4] p-3.5 shadow-[0_2px_10px_rgba(61,43,31,0.03)] flex flex-wrap gap-2">
           {[
             { key: 'COLLECTORS', label: `Collector Verification (${collectors.length})` },
             { key: 'REQUESTS', label: `Master Request Explorer (${allRequests.length})` },
@@ -697,10 +750,10 @@ function AdminDashboard() {
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold border-2 transition-all cursor-pointer ${
+                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold border transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-blue-700 text-white border-blue-800 shadow-2xs'
-                    : 'bg-slate-50 text-slate-800 border-slate-300 hover:bg-slate-100'
+                    ? 'bg-[#3D2B1F] text-white border-[#3D2B1F]'
+                    : 'bg-[#FAF8F5] text-[#6B5B4E] border-[#E6E0D4] hover:border-[#3D2B1F] hover:text-[#3D2B1F]'
                 }`}
               >
                 {tab.label}
@@ -710,13 +763,13 @@ function AdminDashboard() {
         </div>
 
         {activeTab === 'CITIZENS' && (
-          <div className="bg-white rounded-2xl border border-slate-300 p-5 sm:p-6 shadow-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200">
+          <div className="bg-white rounded-3xl border border-[#E6E0D4] p-6 sm:p-7 shadow-[0_4px_20px_rgba(61,43,31,0.04)]">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-[#EDE8DF]">
               <div>
-                <h2 className="text-lg font-extrabold text-slate-900 tracking-tight">
+                <h2 style={SERIF_FONT} className="text-2xl font-bold text-[#3D2B1F] tracking-tight">
                   Registered Citizens Directory ({kpis.total_citizens || 0})
                 </h2>
-                <p className="text-xs font-medium text-slate-600 mt-0.5">
+                <p className="text-xs sm:text-sm font-medium text-[#6B5B4E] mt-1">
                   Household accounts registered on CivicCycle with contact number, join timestamp, and pickup volume.
                 </p>
               </div>
@@ -726,41 +779,41 @@ function AdminDashboard() {
                 placeholder="Search name or phone..."
                 value={citizenSearch}
                 onChange={(e) => setCitizenSearch(e.target.value)}
-                className="px-3.5 py-2 rounded-xl border-2 border-slate-300 bg-white text-xs font-semibold text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-700 w-full sm:w-64"
+                className="px-4 py-2 rounded-full border border-[#DED6C9] bg-[#FAF8F5] text-xs font-semibold text-[#3D2B1F] placeholder-[#9E8F80] focus:outline-none focus:bg-white focus:border-[#3D2B1F] w-full sm:w-64"
               />
             </div>
 
             {loading ? (
-              <div className="py-12 text-center text-sm font-semibold text-slate-600">
+              <div className="py-12 text-center text-sm font-medium text-[#6B5B4E]">
                 Loading registered citizens...
               </div>
             ) : filteredCitizens.length === 0 ? (
-              <div className="mt-5 py-12 px-4 text-center bg-slate-50 rounded-xl border-2 border-dashed border-slate-300">
-                <p className="text-sm font-extrabold text-slate-800">
+              <div className="mt-5 py-12 px-4 text-center bg-[#FAF8F5] rounded-2xl border border-dashed border-[#D8CFC2]">
+                <p style={SERIF_FONT} className="text-base font-bold text-[#3D2B1F]">
                   No matching citizen accounts found.
                 </p>
               </div>
             ) : (
-              <div className="mt-5 overflow-x-auto rounded-xl border border-slate-300">
+              <div className="mt-5 overflow-x-auto rounded-2xl border border-[#E6E0D4]">
                 <table className="w-full text-left border-collapse text-xs sm:text-sm">
                   <thead>
-                    <tr className="bg-slate-100 border-b-2 border-slate-300 text-slate-800 font-extrabold uppercase text-[11px] tracking-wider">
+                    <tr className="bg-[#FAF8F5] border-b border-[#E6E0D4] text-[#6B5B4E] font-bold uppercase text-[11px] tracking-wider">
                       <th className="py-3.5 px-4">Citizen Name</th>
                       <th className="py-3.5 px-4">Phone Number</th>
                       <th className="py-3.5 px-4">Joined Date & Time</th>
                       <th className="py-3.5 px-4 text-right">Total Requests</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-200 bg-white">
+                  <tbody className="divide-y divide-[#EDE8DF] bg-white">
                     {filteredCitizens.map((cit) => (
-                      <tr key={cit.id} className="hover:bg-slate-50/80 transition-colors">
-                        <td className="py-3.5 px-4 font-extrabold text-slate-900">{cit.name}</td>
-                        <td className="py-3.5 px-4 font-semibold text-slate-700">{cit.phone}</td>
-                        <td className="py-3.5 px-4 text-xs font-semibold text-slate-600">
+                      <tr key={cit.id} className="hover:bg-[#FAF8F5]/70 transition-colors">
+                        <td className="py-3.5 px-4 font-bold text-[#3D2B1F]">{cit.name}</td>
+                        <td className="py-3.5 px-4 font-medium text-[#6B5B4E]">{cit.phone}</td>
+                        <td className="py-3.5 px-4 text-xs font-medium text-[#6B5B4E]">
                           {cit.joined_at}
                         </td>
                         <td className="py-3.5 px-4 text-right">
-                          <span className="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-900 border border-blue-200 text-xs font-black">
+                          <span className="px-3 py-1 rounded-full bg-[#FAF8F5] text-[#3D2B1F] border border-[#E6E0D4] text-xs font-bold">
                             {cit.total_requests} Requests
                           </span>
                         </td>
@@ -774,13 +827,13 @@ function AdminDashboard() {
         )}
 
         {activeTab === 'COLLECTORS' && (
-          <div className="bg-white rounded-2xl border border-slate-300 p-5 sm:p-6 shadow-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200">
+          <div className="bg-white rounded-3xl border border-[#E6E0D4] p-6 sm:p-7 shadow-[0_4px_20px_rgba(61,43,31,0.04)]">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-[#EDE8DF]">
               <div>
-                <h2 className="text-lg font-extrabold text-slate-900 tracking-tight">
+                <h2 style={SERIF_FONT} className="text-2xl font-bold text-[#3D2B1F] tracking-tight">
                   Collector KYC Verification & Roster
                 </h2>
-                <p className="text-xs font-medium text-slate-600 mt-0.5">
+                <p className="text-xs sm:text-sm font-medium text-[#6B5B4E] mt-1">
                   Verify Government ID numbers and municipal jurisdiction before granting field access.
                 </p>
               </div>
@@ -789,12 +842,12 @@ function AdminDashboard() {
                 {!showCollectorSearch ? (
                   <button
                     onClick={() => setShowCollectorSearch(true)}
-                    className="px-3 py-1.5 rounded-lg text-xs font-extrabold border-2 border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800 flex items-center gap-1.5 transition-colors cursor-pointer"
+                    className="px-3.5 py-1.5 rounded-full text-xs font-bold border border-[#D8CFC2] bg-[#FAF8F5] hover:bg-[#F3EDE3] text-[#3D2B1F] flex items-center gap-1.5 transition-colors cursor-pointer"
                   >
                     <span>🔍</span> Search
                   </button>
                 ) : (
-                  <div className="flex items-center gap-1.5 bg-white border-2 border-blue-700 rounded-lg px-2.5 py-1 shadow-2xs">
+                  <div className="flex items-center gap-1.5 bg-white border border-[#3D2B1F] rounded-full px-3 py-1">
                     <span className="text-xs">🔍</span>
                     <input
                       type="text"
@@ -802,7 +855,7 @@ function AdminDashboard() {
                       placeholder="Search name or phone..."
                       value={collectorSearch}
                       onChange={(e) => setCollectorSearch(e.target.value)}
-                      className="text-xs font-semibold text-slate-900 placeholder-slate-400 focus:outline-none w-40 sm:w-52"
+                      className="text-xs font-semibold text-[#3D2B1F] placeholder-[#9E8F80] focus:outline-none w-40 sm:w-52"
                     />
                     <button
                       onClick={() => {
@@ -810,7 +863,7 @@ function AdminDashboard() {
                         setShowCollectorSearch(false);
                       }}
                       title="Close Search"
-                      className="text-xs font-extrabold text-slate-500 hover:text-red-600 px-1 cursor-pointer"
+                      className="text-xs font-bold text-[#6B5B4E] hover:text-[#B91C1C] px-1 cursor-pointer"
                     >
                       ✕
                     </button>
@@ -821,10 +874,10 @@ function AdminDashboard() {
                   <button
                     key={f}
                     onClick={() => setCollectorFilter(f)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-extrabold border-2 transition-colors cursor-pointer ${
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-bold border transition-colors cursor-pointer ${
                       collectorFilter === f
-                        ? 'border-blue-700 bg-blue-50 text-blue-900'
-                        : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50'
+                        ? 'border-[#3D2B1F] bg-[#3D2B1F] text-white'
+                        : 'border-[#E6E0D4] bg-[#FAF8F5] text-[#6B5B4E] hover:border-[#3D2B1F] hover:text-[#3D2B1F]'
                     }`}
                   >
                     {f === 'ALL' ? 'All' : f === 'PENDING' ? 'Pending Approval' : 'Verified'}
@@ -834,22 +887,22 @@ function AdminDashboard() {
             </div>
 
             {loading ? (
-              <div className="py-12 text-center text-sm font-semibold text-slate-600">
+              <div className="py-12 text-center text-sm font-medium text-[#6B5B4E]">
                 Loading collector roster...
               </div>
             ) : filteredCollectors.length === 0 ? (
-              <div className="mt-5 py-12 px-4 text-center bg-slate-50 rounded-xl border-2 border-dashed border-slate-300">
-                <p className="text-sm font-extrabold text-slate-800">
+              <div className="mt-5 py-12 px-4 text-center bg-[#FAF8F5] rounded-2xl border border-dashed border-[#D8CFC2]">
+                <p style={SERIF_FONT} className="text-base font-bold text-[#3D2B1F]">
                   {collectorSearch.trim()
                     ? `No collectors matching "${collectorSearch}" found.`
                     : 'No collectors found under this filter.'}
                 </p>
               </div>
             ) : (
-              <div className="mt-5 overflow-x-auto rounded-xl border border-slate-300">
+              <div className="mt-5 overflow-x-auto rounded-2xl border border-[#E6E0D4]">
                 <table className="w-full text-left border-collapse text-xs sm:text-sm">
                   <thead>
-                    <tr className="bg-slate-100 border-b-2 border-slate-300 text-slate-800 font-extrabold uppercase text-[11px] tracking-wider">
+                    <tr className="bg-[#FAF8F5] border-b border-[#E6E0D4] text-[#6B5B4E] font-bold uppercase text-[11px] tracking-wider">
                       <th className="py-3.5 px-4">Collector Name</th>
                       <th className="py-3.5 px-4">Mobile</th>
                       <th className="py-3.5 px-4">Government ID Proof</th>
@@ -858,26 +911,26 @@ function AdminDashboard() {
                       <th className="py-3.5 px-4 text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-200 bg-white">
+                  <tbody className="divide-y divide-[#EDE8DF] bg-white">
                     {filteredCollectors.map((col) => (
-                      <tr key={col.id} className="hover:bg-slate-50/80 transition-colors">
-                        <td className="py-3.5 px-4 font-extrabold text-slate-900">{col.name}</td>
-                        <td className="py-3.5 px-4 font-semibold text-slate-700">{col.phone}</td>
+                      <tr key={col.id} className="hover:bg-[#FAF8F5]/70 transition-colors">
+                        <td className="py-3.5 px-4 font-bold text-[#3D2B1F]">{col.name}</td>
+                        <td className="py-3.5 px-4 font-medium text-[#6B5B4E]">{col.phone}</td>
                         <td className="py-3.5 px-4">
-                          <span className="font-mono text-xs font-extrabold bg-slate-100 text-slate-900 px-2.5 py-1 rounded-md border border-slate-300">
+                          <span className="font-mono text-xs font-bold bg-[#FAF8F5] text-[#3D2B1F] px-2.5 py-1 rounded-lg border border-[#E6E0D4]">
                             {col.id_card_number}
                           </span>
                         </td>
-                        <td className="py-3.5 px-4 font-semibold text-slate-800">
+                        <td className="py-3.5 px-4 font-medium text-[#3D2B1F]">
                           {col.assigned_municipality}, {col.assigned_district}
                         </td>
                         <td className="py-3.5 px-4">
                           {col.is_verified ? (
-                            <span className="px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-teal-50 text-teal-900 border border-teal-300">
+                            <span className="px-3 py-0.5 rounded-full text-[11px] font-bold bg-[#ECFDF5] text-[#166534] border border-[#BBF7D0]">
                               VERIFIED
                             </span>
                           ) : (
-                            <span className="px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-amber-50 text-amber-900 border border-amber-300">
+                            <span className="px-3 py-0.5 rounded-full text-[11px] font-bold bg-[#FEF9C3] text-[#854D0E] border border-[#FDE047]">
                               PENDING REVIEW
                             </span>
                           )}
@@ -887,7 +940,7 @@ function AdminDashboard() {
                             <button
                               disabled={actionLoadingId === col.id}
                               onClick={() => handleVerifyCollector(col.id, 'APPROVE')}
-                              className="px-3.5 py-1.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white text-xs font-extrabold transition-colors cursor-pointer"
+                              className="px-4 py-1.5 rounded-full bg-[#F9D548] hover:bg-[#F3C623] text-[#3D2B1F] text-xs font-bold transition-colors cursor-pointer"
                             >
                               {actionLoadingId === col.id ? 'Approving...' : 'Approve & Verify'}
                             </button>
@@ -895,7 +948,7 @@ function AdminDashboard() {
                             <button
                               disabled={actionLoadingId === col.id}
                               onClick={() => handleVerifyCollector(col.id, 'REVOKE')}
-                              className="px-3.5 py-1.5 rounded-lg border-2 border-red-300 bg-white hover:bg-red-50 text-red-700 text-xs font-extrabold transition-colors cursor-pointer"
+                              className="px-4 py-1.5 rounded-full border border-[#FECACA] bg-white hover:bg-[#FEF2F2] text-[#B91C1C] text-xs font-bold transition-colors cursor-pointer"
                             >
                               {actionLoadingId === col.id ? 'Updating...' : 'Suspend / Revoke'}
                             </button>
@@ -911,29 +964,29 @@ function AdminDashboard() {
         )}
 
         {activeTab === 'REQUESTS' && (
-          <div className="bg-white rounded-2xl border border-slate-300 p-5 sm:p-6 shadow-sm">
-            <div className="pb-4 border-b border-slate-200">
-              <h2 className="text-lg font-extrabold text-slate-900 tracking-tight">
+          <div className="bg-white rounded-3xl border border-[#E6E0D4] p-6 sm:p-7 shadow-[0_4px_20px_rgba(61,43,31,0.04)]">
+            <div className="pb-5 border-b border-[#EDE8DF]">
+              <h2 style={SERIF_FONT} className="text-2xl font-bold text-[#3D2B1F] tracking-tight">
                 Master Pickup Requests Explorer
               </h2>
-              <p className="text-xs font-medium text-slate-600 mt-0.5">
+              <p className="text-xs sm:text-sm font-medium text-[#6B5B4E] mt-1">
                 Audit pickups across all districts, municipalities, and wards. Re-open delayed IN_PROGRESS tasks if required.
               </p>
             </div>
 
-            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 p-3.5 bg-slate-100 rounded-xl border border-slate-300">
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 p-4 bg-[#FAF8F5] rounded-2xl border border-[#E6E0D4]">
               <input
                 type="text"
                 placeholder="Search citizen, address, AI item..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="px-3 py-2 rounded-lg border-2 border-slate-300 bg-white text-xs font-semibold text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-700"
+                className="px-3.5 py-2 rounded-xl border border-[#DED6C9] bg-white text-xs font-medium text-[#3D2B1F] placeholder-[#9E8F80] focus:outline-none focus:border-[#3D2B1F]"
               />
 
               <select
                 value={filterDistrict}
                 onChange={(e) => setFilterDistrict(e.target.value)}
-                className="px-3 py-2 rounded-lg border-2 border-slate-300 bg-white text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-700"
+                className="px-3.5 py-2 rounded-xl border border-[#DED6C9] bg-white text-xs font-semibold text-[#3D2B1F] focus:outline-none focus:border-[#3D2B1F]"
               >
                 <option value="ALL">All Districts</option>
                 {uniqueDistricts.map((d) => (
@@ -946,7 +999,7 @@ function AdminDashboard() {
               <select
                 value={filterMunicipality}
                 onChange={(e) => setFilterMunicipality(e.target.value)}
-                className="px-3 py-2 rounded-lg border-2 border-slate-300 bg-white text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-700"
+                className="px-3.5 py-2 rounded-xl border border-[#DED6C9] bg-white text-xs font-semibold text-[#3D2B1F] focus:outline-none focus:border-[#3D2B1F]"
               >
                 <option value="ALL">All Municipalities</option>
                 {uniqueMunicipalities.map((m) => (
@@ -959,7 +1012,7 @@ function AdminDashboard() {
               <select
                 value={filterWard}
                 onChange={(e) => setFilterWard(e.target.value)}
-                className="px-3 py-2 rounded-lg border-2 border-slate-300 bg-white text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-700"
+                className="px-3.5 py-2 rounded-xl border border-[#DED6C9] bg-white text-xs font-semibold text-[#3D2B1F] focus:outline-none focus:border-[#3D2B1F]"
               >
                 <option value="ALL">All Wards</option>
                 {uniqueWards.map((w) => (
@@ -972,7 +1025,7 @@ function AdminDashboard() {
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="px-3 py-2 rounded-lg border-2 border-slate-300 bg-white text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-700"
+                className="px-3.5 py-2 rounded-xl border border-[#DED6C9] bg-white text-xs font-semibold text-[#3D2B1F] focus:outline-none focus:border-[#3D2B1F]"
               >
                 <option value="ALL">All Statuses</option>
                 <option value="PENDING">PENDING</option>
@@ -983,47 +1036,49 @@ function AdminDashboard() {
             </div>
 
             {filteredRequests.length === 0 ? (
-              <div className="mt-5 py-12 px-4 text-center bg-slate-50 rounded-xl border-2 border-dashed border-slate-300">
-                <p className="text-sm font-extrabold text-slate-800">No matching pickup requests found.</p>
+              <div className="mt-5 py-12 px-4 text-center bg-[#FAF8F5] rounded-2xl border border-dashed border-[#D8CFC2]">
+                <p style={SERIF_FONT} className="text-base font-bold text-[#3D2B1F]">
+                  No matching pickup requests found.
+                </p>
               </div>
             ) : (
-              <div className="mt-5 space-y-3.5">
+              <div className="mt-5 space-y-4">
                 {filteredRequests.map((req) => {
                   const fullImg = getImageUrl(req.image);
                   return (
                     <div
                       key={req.id}
-                      className="p-4 rounded-xl border-2 border-slate-200 bg-slate-50/70 flex flex-col sm:flex-row gap-4 items-start"
+                      className="p-4 rounded-2xl border border-[#EDE8DF] bg-[#FAF8F5]/80 flex flex-col sm:flex-row gap-4 items-start"
                     >
                       <div
                         onClick={() => fullImg && setPreviewImage(fullImg)}
-                        className={`w-full sm:w-32 h-36 sm:h-28 rounded-xl overflow-hidden border border-slate-300 bg-white shrink-0 flex items-center justify-center ${
+                        className={`w-full sm:w-32 h-36 sm:h-28 rounded-xl overflow-hidden border border-[#E6E0D4] bg-white shrink-0 flex items-center justify-center ${
                           fullImg ? 'cursor-zoom-in' : ''
                         }`}
                       >
                         {fullImg ? (
                           <img src={fullImg} alt="Waste" className="w-full h-full object-cover" />
                         ) : (
-                          <span className="text-xs font-semibold text-slate-400">No Photo</span>
+                          <span className="text-xs font-medium text-[#9E8F80]">No Photo</span>
                         )}
                       </div>
 
                       <div className="flex-1 w-full min-w-0">
                         <div className="flex items-center justify-between gap-2 flex-wrap">
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className="text-xs font-black text-slate-900 bg-slate-200 px-2 py-0.5 rounded">
+                            <span className="text-xs font-bold text-[#3D2B1F] bg-[#F3EDE3] px-2.5 py-0.5 rounded-full">
                               #{req.id}
                             </span>
-                            <span className="text-xs font-extrabold text-teal-900 bg-teal-50 px-2.5 py-0.5 rounded-lg border border-teal-300">
-                              AI: {req.ai_detected_item || 'Recyclable'}
+                            <span className="text-xs font-bold text-[#3D2B1F] bg-white px-3 py-0.5 rounded-full border border-[#E6E0D4]">
+                              AI: <span className="text-[#E85D2A]">{req.ai_detected_item || 'Recyclable'}</span>
                             </span>
-                            <span className="text-xs font-extrabold text-blue-900 bg-blue-50 px-2.5 py-0.5 rounded-lg border border-blue-200">
+                            <span className="text-xs font-semibold text-[#6B5B4E] bg-white px-3 py-0.5 rounded-full border border-[#E6E0D4]">
                               {req.municipality} (Ward {req.ward_no})
                             </span>
                           </div>
 
                           <span
-                            className={`text-[11px] font-extrabold px-2.5 py-0.5 rounded-full border ${getStatusBadgeClasses(
+                            className={`text-[11px] font-bold px-3 py-0.5 rounded-full border ${getStatusBadgeClasses(
                               req.status
                             )}`}
                           >
@@ -1031,23 +1086,23 @@ function AdminDashboard() {
                           </span>
                         </div>
 
-                        <p className="text-xs sm:text-sm font-semibold text-slate-800 mt-2">
-                          <strong className="font-extrabold text-slate-900">Address:</strong>{' '}
+                        <p className="text-xs sm:text-sm font-medium text-[#6B5B4E] mt-2">
+                          <strong className="font-bold text-[#3D2B1F]">Address:</strong>{' '}
                           {req.house_details}, {req.district}
                         </p>
 
-                        <p className="text-xs font-semibold text-slate-700 mt-1">
-                          <strong className="font-extrabold text-slate-900">Citizen:</strong>{' '}
+                        <p className="text-xs font-medium text-[#6B5B4E] mt-1">
+                          <strong className="font-bold text-[#3D2B1F]">Citizen:</strong>{' '}
                           {req.user_name || 'N/A'} ({req.user_phone || 'N/A'})
                           {req.collector_name && (
-                            <span className="ml-3 text-blue-800 font-extrabold">
-                              - Assigned Collector: {req.collector_name}
+                            <span className="ml-2 text-[#E85D2A] font-bold">
+                              • Assigned Collector: {req.collector_name}
                             </span>
                           )}
                         </p>
 
                         {req.collector_remark && (
-                          <p className="text-xs font-medium text-slate-600 mt-1.5 italic">
+                          <p className="text-xs font-medium text-[#6B5B4E] mt-1.5 italic">
                             Note: "{req.collector_remark}"
                           </p>
                         )}
@@ -1057,7 +1112,7 @@ function AdminDashboard() {
                             <button
                               disabled={actionLoadingId === req.id}
                               onClick={() => handleReopenRequest(req.id)}
-                              className="px-3.5 py-1.5 rounded-lg border-2 border-amber-400 bg-amber-50 hover:bg-amber-100 text-amber-950 text-xs font-extrabold transition-colors cursor-pointer"
+                              className="px-4 py-1.5 rounded-full border border-[#FDE047] bg-[#FEF9C3] hover:bg-[#F9D548] text-[#3D2B1F] text-xs font-bold transition-colors cursor-pointer"
                             >
                               {actionLoadingId === req.id
                                 ? 'Re-opening...'
@@ -1076,12 +1131,12 @@ function AdminDashboard() {
 
         {activeTab === 'ANALYTICS' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white rounded-2xl border border-slate-300 p-5 sm:p-6 shadow-sm overflow-hidden">
-              <div className="pb-4 border-b border-slate-200">
-                <h2 className="text-lg font-extrabold text-slate-900 tracking-tight">
+            <div className="bg-white rounded-3xl border border-[#E6E0D4] p-6 sm:p-7 shadow-[0_4px_20px_rgba(61,43,31,0.04)] overflow-hidden">
+              <div className="pb-4 border-b border-[#EDE8DF]">
+                <h2 style={SERIF_FONT} className="text-2xl font-bold text-[#3D2B1F] tracking-tight">
                   AI Detected Waste Breakdown
                 </h2>
-                <p className="text-xs font-medium text-slate-600 mt-0.5">
+                <p className="text-xs sm:text-sm font-medium text-[#6B5B4E] mt-1">
                   Material classification distribution verified by Vision AI.
                 </p>
               </div>
@@ -1094,38 +1149,38 @@ function AdminDashboard() {
               />
             </div>
 
-            <div className="bg-white rounded-2xl border border-slate-300 p-5 sm:p-6 shadow-sm overflow-hidden">
-              <div className="flex items-start justify-between gap-3 pb-4 border-b border-slate-200 flex-wrap">
+            <div className="bg-white rounded-3xl border border-[#E6E0D4] p-6 sm:p-7 shadow-[0_4px_20px_rgba(61,43,31,0.04)] overflow-hidden">
+              <div className="flex items-start justify-between gap-3 pb-4 border-b border-[#EDE8DF] flex-wrap">
                 <div>
-                  <h2 className="text-lg font-extrabold text-slate-900 tracking-tight">
+                  <h2 style={SERIF_FONT} className="text-2xl font-bold text-[#3D2B1F] tracking-tight">
                     {geoViewMode === 'DISTRICT'
                       ? 'District Volume Distribution'
                       : 'Municipality Volume Distribution'}
                   </h2>
-                  <p className="text-xs font-medium text-slate-600 mt-0.5">
+                  <p className="text-xs sm:text-sm font-medium text-[#6B5B4E] mt-1">
                     {geoViewMode === 'DISTRICT'
                       ? 'Pickup volume across districts.'
                       : 'Top 5 on pie chart + complete municipality ranking below.'}
                   </p>
                 </div>
 
-                <div className="p-1 bg-slate-200 rounded-xl flex gap-1 border border-slate-300">
+                <div className="p-1 bg-[#EDE8DF] rounded-full flex gap-1">
                   <button
                     onClick={() => setGeoViewMode('DISTRICT')}
-                    className={`px-3 py-1 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                       geoViewMode === 'DISTRICT'
-                        ? 'bg-blue-700 text-white shadow-2xs'
-                        : 'text-slate-800 hover:bg-slate-300/60'
+                        ? 'bg-[#3D2B1F] text-white shadow-2xs'
+                        : 'text-[#6B5B4E] hover:text-[#3D2B1F]'
                     }`}
                   >
                     Districts
                   </button>
                   <button
                     onClick={() => setGeoViewMode('MUNICIPALITY')}
-                    className={`px-3 py-1 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                       geoViewMode === 'MUNICIPALITY'
-                        ? 'bg-blue-700 text-white shadow-2xs'
-                        : 'text-slate-800 hover:bg-slate-300/60'
+                        ? 'bg-[#3D2B1F] text-white shadow-2xs'
+                        : 'text-[#6B5B4E] hover:text-[#3D2B1F]'
                     }`}
                   >
                     Municipalities
@@ -1154,21 +1209,24 @@ function AdminDashboard() {
         )}
 
         {activeTab === 'SECURITY' && (
-          <div className="max-w-lg bg-white rounded-2xl border border-slate-300 shadow-sm overflow-hidden">
-            <div className="h-1.5 w-full bg-blue-700" />
-            <div className="p-6">
-              <div className="pb-4 border-b border-slate-200">
-                <h2 className="text-lg font-extrabold text-slate-900 tracking-tight">
-                  Administrator Security Settings
+          <div className="max-w-lg bg-white rounded-3xl border border-[#E6E0D4] shadow-[0_4px_20px_rgba(61,43,31,0.04)] overflow-hidden">
+            <div className="p-6 sm:p-7">
+              <div className="pb-5 border-b border-[#EDE8DF]">
+                <h2
+                  style={SERIF_FONT}
+                  className="text-2xl font-bold text-[#3D2B1F] tracking-tight inline-block"
+                >
+                  Administrator Security
+                  <span className="block h-1.5 w-24 bg-[#F9D548] rounded-full mt-1.5" />
                 </h2>
-                <p className="text-xs font-medium text-slate-600 mt-0.5">
+                <p className="text-xs sm:text-sm font-medium text-[#6B5B4E] mt-2">
                   Update your command center password. Credentials are secured with PBKDF2 hashing.
                 </p>
               </div>
 
               <form onSubmit={handlePasswordChangeSubmit} className="mt-5 space-y-4">
                 <div>
-                  <label className="block text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-1.5">
+                  <label className="block text-[11px] font-bold text-[#6B5B4E] uppercase tracking-wider mb-1.5">
                     Current Password
                   </label>
                   <input
@@ -1176,12 +1234,12 @@ function AdminDashboard() {
                     required
                     value={passwordForm.old_password}
                     onChange={(e) => setPasswordForm({ ...passwordForm, old_password: e.target.value })}
-                    className="w-full px-3.5 py-2.5 border-2 border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:outline-none focus:border-blue-700"
+                    className="w-full px-3.5 py-2.5 bg-[#FAF8F5] border border-[#DED6C9] rounded-xl text-sm font-medium text-[#3D2B1F] focus:outline-none focus:bg-white focus:border-[#3D2B1F]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-1.5">
+                  <label className="block text-[11px] font-bold text-[#6B5B4E] uppercase tracking-wider mb-1.5">
                     New Password (Min 6 characters)
                   </label>
                   <input
@@ -1189,12 +1247,12 @@ function AdminDashboard() {
                     required
                     value={passwordForm.new_password}
                     onChange={(e) => setPasswordForm({ ...passwordForm, new_password: e.target.value })}
-                    className="w-full px-3.5 py-2.5 border-2 border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:outline-none focus:border-blue-700"
+                    className="w-full px-3.5 py-2.5 bg-[#FAF8F5] border border-[#DED6C9] rounded-xl text-sm font-medium text-[#3D2B1F] focus:outline-none focus:bg-white focus:border-[#3D2B1F]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-1.5">
+                  <label className="block text-[11px] font-bold text-[#6B5B4E] uppercase tracking-wider mb-1.5">
                     Confirm New Password
                   </label>
                   <input
@@ -1202,17 +1260,17 @@ function AdminDashboard() {
                     required
                     value={passwordForm.confirm_password}
                     onChange={(e) => setPasswordForm({ ...passwordForm, confirm_password: e.target.value })}
-                    className="w-full px-3.5 py-2.5 border-2 border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:outline-none focus:border-blue-700"
+                    className="w-full px-3.5 py-2.5 bg-[#FAF8F5] border border-[#DED6C9] rounded-xl text-sm font-medium text-[#3D2B1F] focus:outline-none focus:bg-white focus:border-[#3D2B1F]"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={passwordLoading}
-                  className={`w-full py-3 px-4 rounded-xl text-white font-extrabold text-sm transition-colors cursor-pointer mt-2 ${
+                  className={`w-full py-3.5 px-6 rounded-full font-bold text-sm transition-all cursor-pointer mt-2 ${
                     passwordLoading
-                      ? 'bg-slate-500 cursor-not-allowed'
-                      : 'bg-blue-700 hover:bg-blue-800 shadow-sm'
+                      ? 'bg-[#E6E0D4] text-[#6B5B4E] cursor-not-allowed'
+                      : 'bg-[#F9D548] hover:bg-[#F3C623] text-[#3D2B1F] active:scale-[0.99] shadow-xs'
                   }`}
                 >
                   {passwordLoading ? 'Updating Password...' : 'Update Admin Password'}
@@ -1226,22 +1284,22 @@ function AdminDashboard() {
       {previewImage && (
         <div
           onClick={() => setPreviewImage(null)}
-          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-[#3D2B1F]/80 backdrop-blur-xs flex items-center justify-center z-50 p-4"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative max-w-[90vw] max-h-[90vh] bg-white rounded-2xl p-3 shadow-2xl"
+            className="relative max-w-[90vw] max-h-[90vh] bg-white rounded-3xl p-3 shadow-2xl border border-[#E6E0D4]"
           >
             <button
               onClick={() => setPreviewImage(null)}
-              className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-red-600 hover:bg-red-700 text-white text-sm font-extrabold flex items-center justify-center shadow-md cursor-pointer"
+              className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-[#3D2B1F] hover:bg-[#E85D2A] text-white text-sm font-bold flex items-center justify-center shadow-md cursor-pointer transition-colors"
             >
               ✕
             </button>
             <img
               src={previewImage}
               alt="Waste Full View"
-              className="max-w-[85vw] max-h-[80vh] rounded-xl block object-contain"
+              className="max-w-[85vw] max-h-[80vh] rounded-2xl block object-contain"
             />
           </div>
         </div>
